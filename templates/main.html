@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <title>Pratice Login Page</title>
+        <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
+        <script type="text/javascript" src="javascript.js"></script>
+        
+        <script> function showAlert() {
+            alert("Registo Efetuado com Sucesso");
+          } </script>
+
+        
+    </head>
+    <body {%if new_User%} onload="showAlert()" {% endif %}>
+        <h1>Pratice Web Site</h1>
+        <h2>Welcome {{user}} </h2>
+        <a target="_blank" href="https://www.booked.net/weather/lisbon-18257"><img src="https://w.bookcdn.com/weather/picture/32_18257_1_1_34495e_250_2c3e50_ffffff_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=w209&anc_id=96715"  alt="booked.net" class="center"/></a>
+
+        <div class="date" id="current_date">
+        <script>
+            document.getElementById("current_date").innerHTML = Date();
+            </script>
+        </div>
+        <div class="errodel">
+            {%if adminDelete==False%}
+            <p> Não foi possivel remover o utilizador! </p>
+            {% endif %}
+        </div>
+        <div class="ok">
+            {%if adminDelete==True%}
+            <p> Utilizador removido </p>
+            {% endif %}
+        </div>
+        {%if data%}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>User</th>
+                        <th>Salt</th>
+                        <th>Password(Sha256)</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in data %}
+                    <tr>
+                        <td>{{ item.Id }}</td>
+                        <td>{{ item.User }}</td>
+                        <td>{{ item.Salt }}</td>
+                        <td>{{ item.Password }}</td>
+                        <td>{{ item.role }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="delete">
+            <form id="login" action="/" method="post">
+                <input type="text" 
+                    id="deluser" 
+                    name="deluser"
+                    placeholder="Name">
+                <input id="submit" type="submit" value="Delete">
+            </form>
+            </div>
+        {% endif %}
+        <div class="logout">
+        <p><a href="https://127.0.0.1:5000/login">Log Out</a></p>
+        </div>
+    </body>
+</html>

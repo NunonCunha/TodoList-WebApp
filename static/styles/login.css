@@ -1,0 +1,104 @@
+body  
+{  
+    margin: 0;  
+    padding: 0;  
+    background-color:#000000;  
+    font-family: sans-serif;  
+}
+
+h1,h2{  
+    text-align: center;  
+    color: #ffffff;  
+    padding: 10px;  
+}
+
+.date{
+    text-align: center;  
+    color: #ffffff;  
+    padding: 30px;  
+}
+
+.delete{
+    padding: 20px;
+    text-align: center;
+    border-radius: 3px;  
+}
+
+table, th, td{
+    border: 1px solid white;
+    color: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logout{
+    text-align: center;  
+    padding: 10px;  
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+.login{  
+    width: 382px;  
+    overflow: hidden;  
+    margin: auto;  
+    padding: 80px;  
+    background: #dfdfdf;  
+    border-radius: 15px ;  
+     
+}
+
+#username{  
+    width: 300px;  
+    height: 30px;  
+    border: none;  
+    border-radius: 3px;  
+    padding-left: 8px;  
+}  
+#password{  
+    width: 300px;  
+    height: 30px;  
+    border: none;  
+    border-radius: 3px;  
+    padding-left: 8px;     
+}  
+#submit{  
+    width: 300px;  
+    height: 30px;  
+    border-radius: 17px;  
+    padding-left: 7px; 
+    background-color: #282828; 
+    color: #ffffff;
+}  
+
+.erro{
+    color: red;
+    font-size: x-small;
+}
+
+.errodel{
+    text-align: center;  
+    color: red;
+    font-size: medium;
+}
+
+.ok{
+    text-align: center;  
+    color: green;
+    font-size: medium;
+}
+
+a:link, a:visited {
+	text-decoration: none
+	}
+a:hover {
+	text-decoration: underline;
+	color: #f00
+	}
+a:active {
+	text-decoration: none
+	}

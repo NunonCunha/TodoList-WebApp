@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pratice Login Page</title>
+        <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
+    </head>
+    <body>
+        <h2>Log In</h2>
+        
+        <div class="login">
+        <form id="login" action="/login" method="post">
+            <input type="text" 
+                id="username" 
+                name="username" value=""
+                placeholder="Username"
+                required><br>
+            <p></p>
+            <input type="password" 
+                id="password" 
+                name="password" value=""
+                placeholder="Password"
+                required><br><br>
+            <input id="submit" type="submit" value="LOG IN">
+            <div class="erro">
+                {%if error%}
+                <p> Nome do utilizador ou palavra-passe inválido! </p>
+                {% endif %}
+            </div>
+            <p>Don’t have an account? <a href="https://127.0.0.1:5000/registo">Sign up</a></p>
+        </form>
+        </div>
+    </body>
+</html>
