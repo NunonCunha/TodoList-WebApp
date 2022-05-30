@@ -18,7 +18,7 @@ def create_DB():
     'role' TEXT NOT NULL)"""
 
     #Query para criar tabela todo 
-    qry_tableTodo = """CREATE TABLE todo 
+    qry_tableTodo = """CREATE TABLE IF NOT EXISTS todo 
     ('todo_id' INTEGER PRIMARY KEY AUTOINCREMENT ,
     'task' TEXT NOT NULL,
     'task_descrition' TEXT NOT NULL,
@@ -31,7 +31,7 @@ def create_DB():
     cursor.execute(qry_tableUser)
     cursor.execute(qry_tableTodo)
     #Ativação das FK
-    cursor.execute('PRAGMA  foreign_keys=ON')
+    cursor.execute('PRAGMA foreign_keys=ON')
 
     #Comite da DB
     dBase.commit()

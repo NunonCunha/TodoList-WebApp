@@ -87,16 +87,25 @@ def securityProcess(password):
     return salt,hash.hexdigest()
 
 #Verifica de a DB tem um administrador, caso não tenha pede para introduzir dados para criar um administrador
+mail = ""
+psw = ""
 while checkAdmin() == False:
-    print("Creating admin:")
+    os.system('cls')
+    print("###___Creating admin___###")
     fname = input("Enter first name: ")
     lname = input("Enter last name: ")
-    mail = input("Enter email: ")
-    psw = input("Enter password: ")
-    salt, hash256 = securityProcess(psw)
-    role = "Admin"
-    insertUser(fname,lname,mail,salt,hash256,role)
-    os.system('cls')
+    if len(mail) >= 6:
+        if len(psw) >= 12:
+            salt, hash256 = securityProcess(psw)
+            role = "Admin"
+            insertUser(fname,lname,mail,salt,hash256,role)
+            os.system('cls')
+        else:
+            print("Choose a password with min 12 characters long")
+            psw = input("Enter password: ")
+    else:
+        print("Choose a username with min 6 characters long")
+        name = input("Enter username: ")
 
 app = Flask(__name__)
 app.secret_key=rand()
