@@ -8,7 +8,7 @@ from flask import Flask, redirect, render_template, request, session, url_for
 from createDB import create_DB
 
 #Variavel path para abstrair o server side da localização dos ficheiros
-path = 'db_web.db'
+path = 'db_todoApp.db'
 
 #Variavel bool que indica se o ficheiro existe
 fileExist = os.path.exists(path)
@@ -17,39 +17,50 @@ fileExist = os.path.exists(path)
 if not fileExist:
     create_DB()
 
-def insertUser(user,salt,psw,role):
-    dbase = sql.connect("db_web.db")
+def insertUser(fname,lname,mail,salt,psw,role):
+    dbase = sql.connect("db_todoApp.db")
     cursor = dbase.cursor()
-    cursor.execute("INSERT INTO utilizadores(User,Salt,Password,role) VALUES (?,?,?,?)", (user, salt,psw,role))
+    cursor.execute("""INSERT INTO user(first_name, last_name, email, salt, password_hash, role)
+    VALUES (?,?,?,?,?,?)""",(fname,lname,mail,salt,psw,role))
     dbase.commit()
 
 def findrole():
-    dbase = sql.connect("db_web.db")
+    dbase = sql.connect("db_todoApp.db")
     cursor = dbase.cursor()
-    cursor.execute("SELECT role FROM utilizadores")
+    cursor.execute("SELECT role FROM user")
     dado=cursor.fetchone()
     return dado
 
 def getRegister():
-    dbase = sql.connect("db_web.db")
+    dbase = sql.connect("db_todoApp.db")
     dbase.row_factory=sql.Row
     cursor = dbase.cursor()
-    cursor.execute("SELECT * FROM utilizadores")
+    cursor.execute("SELECT * FROM user")
     dado=cursor.fetchall()
     return dado
 
-def finduser(user):
-    dbase = sql.connect("db_web.db")
+def findmail(mail):
+    dbase = sql.connect("db_todoApp.db")
     cursor = dbase.cursor()
-    cursor.execute("SELECT * FROM utilizadores WHERE User=?",(user,))
+    cursor.execute("SELECT * FROM user WHERE email=?",(mail,))
     dado=cursor.fetchone()
     return dado
 
 def delete_user(id):
-    dbase=sql.connect("db_web.db")
+    dbase=sql.connect("db_todoApp.db")
     cursor=dbase.cursor()
-    cursor.execute("DELETE FROM utilizadores WHERE Id=?",(id,))
+    cursor.execute("DELETE FROM user WHERE id=?",(id,))
     dbase.commit()
+
+def isAdmin(mail):
+    dbase = sql.connect("db_todoApp.db")
+    cursor = dbase.cursor()
+    cursor.execute("SELECT role FROM user WHERE email=?",(mail,))
+    dado=cursor.fetchone()
+    if "Admin" in dado:
+        return True
+    else:
+        return False
 
 #Metodo random que retorna uma string aleatorio de 16 caracteres
 def rand():
@@ -67,16 +78,6 @@ def checkAdmin():
     else:
         return False
 
-def isAdmin(user):
-    dbase = sql.connect("db_web.db")
-    cursor = dbase.cursor()
-    cursor.execute("SELECT role FROM utilizadores WHERE User=?",(user,))
-    dado=cursor.fetchone()
-    if "Admin" in dado:
-        return True
-    else:
-        return False
-
 #Metodo para gerar um salt aleatoriamente e gera um hash com a combinação da password e salt
 #Retorna Tupla com strings
 def securityProcess(password):
@@ -88,11 +89,13 @@ def securityProcess(password):
 #Verifica de a DB tem um administrador, caso não tenha pede para introduzir dados para criar um administrador
 while checkAdmin() == False:
     print("Creating admin:")
-    name = input("Enter username: ")
+    fname = input("Enter first name: ")
+    lname = input("Enter last name: ")
+    mail = input("Enter email: ")
     psw = input("Enter password: ")
     salt, hash256 = securityProcess(psw)
     role = "Admin"
-    insertUser(name,salt,hash256,role)
+    insertUser(fname,lname,mail,salt,hash256,role)
     os.system('cls')
 
 app = Flask(__name__)
@@ -106,12 +109,12 @@ def verificaPassword(salt, hash, password):
 
 #Metodo para verifica se o utilizador introduziu as credenciais corretamente
 #Retorna boolean
-def verificaLogin(username, password):
-    user = finduser(username)
+def verificaLogin(email, password):
+    user = findmail(email)
     if user is None:
         return False
-    elif username in user:
-        check = verificaPassword(user[2], user[3],password)
+    elif email in user:
+        check = verificaPassword(user[4], user[5],password)
         if check == True:
             return True
         else:
@@ -121,19 +124,19 @@ def verificaLogin(username, password):
 
 #Metedo para verificar se o utilizador existe na DB
 #Retorna boolean
-def verificaUser(username):
-    user = finduser(username)
+def verificaMail(email):
+    user = findmail(email)
     if user is None:
         return False
-    elif username in user:
+    elif email in user:
         return True
     else:
         return False
 
 #Metodo para apagar utilizador da DB
 #Retorna boolean
-def apagarUser(username):
-    user = finduser(username)
+def apagarUser(email):
+    user = findmail(email)
     if user is None:
         return False
     elif 'Bussiness' in user :
@@ -156,8 +159,8 @@ def session_timetout():
 def login():
     session.clear()
     if request.method == 'POST':
-        if verificaLogin(request.form['username'],request.form['password']):
-            session['username'] = request.form['username']
+        if verificaLogin(request.form['email'],request.form['password']):
+            session['email'] = request.form['email']
             return redirect(url_for('principal'))
         else:
             error = True
@@ -171,15 +174,17 @@ def login():
 ###Caso verdade redireciona para metodo erro
 @app.route("/registo", methods=['GET', 'POST'])
 def registo():
-    if request.method == 'POST':    
-        username = request.form['username']
+    if request.method == 'POST':
+        fname = request.form['fname']
+        lname = request.form['lname']
+        email = request.form['email']
         password = request.form['password']
         role="Bussiness"
-        if verificaUser(username) == False:
+        if verificaMail(email) == False:
             salt, hash256 = securityProcess(password)
-            insertUser(username,salt,hash256,role)
+            insertUser(fname,lname,email,salt,hash256,role)
             session.clear()
-            session['username'] = username
+            session['email'] = email
             return redirect(url_for('principal', new_User=True))
         else:
             return redirect(url_for('erro'))
@@ -197,21 +202,21 @@ def erro():
 ### Caso mentira redireciona para a pagina de login
 @app.route("/",  methods=['GET', 'POST'])
 def principal():
-    if 'username' in session:
+    if 'email' in session:
         new_User=request.args.get('new_User')
         if new_User == "True":
-            return render_template('main.html', user = session['username'], new_User = True)
-        elif isAdmin(session['username']) == True:
+            return render_template('main.html', user = session['email'], new_User = True)
+        elif isAdmin(session['email']) == True:
             data = getRegister()
             if request.method == 'POST':
                 user = request.form['deluser']
                 adminDelete = apagarUser(user)
                 data = getRegister()
-                return render_template('main.html', user = session['username'], data = data, adminDelete = adminDelete)
+                return render_template('main.html', user = session['email'], data = data, adminDelete = adminDelete)
             else:
-                return render_template('main.html', user = session['username'], data = data)
+                return render_template('main.html', user = session['email'], data = data)
         else:
-            return render_template('main.html', user = session['username'])
+            return render_template('main.html', user = session['email'])
     else:
         return redirect(url_for('login'))
 

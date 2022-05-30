@@ -9,9 +9,23 @@
         <div class="login">
         <form id="login" action="/registo" method="post">
             <input type="text" 
-                id="username" 
-                name="username" value=""
-                placeholder="Username"
+                id="fname" 
+                name="fname" value=""
+                placeholder="First Name"
+                minlength="4"
+                required><br>
+            <p></p>
+            <input type="text" 
+                id="lname" 
+                name="lname" value=""
+                placeholder="Last Name"
+                minlength="4"
+                required><br>
+            <p></p>
+            <input type="text" 
+                id="email" 
+                name="email" value=""
+                placeholder="Email"
                 minlength="4"
                 required><br>
             <p></p>
