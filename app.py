@@ -17,6 +17,7 @@ fileExist = os.path.exists(path)
 if not fileExist:
     create_DB()
 
+#Metodo para introduzir um novo utilizador na DB (Create)
 def insertUser(fname,lname,mail,salt,psw,role):
     dbase = sql.connect("db_todoApp.db")
     cursor = dbase.cursor()
@@ -24,6 +25,8 @@ def insertUser(fname,lname,mail,salt,psw,role):
     VALUES (?,?,?,?,?,?)""",(fname,lname,mail,salt,psw,role))
     dbase.commit()
 
+#Metodo para retornar uma tupla da query (Read)
+##Return tupla com a role da tabela user
 def findrole():
     dbase = sql.connect("db_todoApp.db")
     cursor = dbase.cursor()
@@ -31,6 +34,8 @@ def findrole():
     dado=cursor.fetchone()
     return dado
 
+#Metodo para retornar um dicionario da query (Read)
+##Return dicionario da tabela user
 def getRegister():
     dbase = sql.connect("db_todoApp.db")
     dbase.row_factory=sql.Row
@@ -39,6 +44,8 @@ def getRegister():
     dado=cursor.fetchall()
     return dado
 
+#Metodo para retornar um dicionario da query (Read)
+##Return tupla da tabela user onde o argumento passado foi o mail
 def findmail(mail):
     dbase = sql.connect("db_todoApp.db")
     cursor = dbase.cursor()
@@ -46,12 +53,15 @@ def findmail(mail):
     dado=cursor.fetchone()
     return dado
 
+#Metodo para eliminar utilizador na DB (Delete)
 def delete_user(id):
     dbase=sql.connect("db_todoApp.db")
     cursor=dbase.cursor()
     cursor.execute("DELETE FROM user WHERE id=?",(id,))
     dbase.commit()
 
+#Metodo para verificar se a role do argumento passado é admin (Read)
+##Return boolean
 def isAdmin(mail):
     dbase = sql.connect("db_todoApp.db")
     cursor = dbase.cursor()
@@ -62,6 +72,8 @@ def isAdmin(mail):
     else:
         return False
 
+#Metodo para retirar elementos necessarios da Db atravez do argumento passado (Read)
+##Return tupla com nome do utilizador e mail
 def getUname(mail):
     dbase = sql.connect("db_todoApp.db")
     cursor = dbase.cursor()
