@@ -62,6 +62,14 @@ def isAdmin(mail):
     else:
         return False
 
+def getUname(mail):
+    dbase = sql.connect("db_todoApp.db")
+    cursor = dbase.cursor()
+    cursor.execute("SELECT first_name , last_name FROM user WHERE email=?",(mail,))
+    dado=cursor.fetchone()
+    fullName = dado[0] + ' ' + dado[1]
+    return fullName , mail
+
 #Metodo random que retorna uma string aleatorio de 16 caracteres
 def rand():
     chars = string.ascii_letters+string.digits+string.punctuation
@@ -169,7 +177,7 @@ def login():
     session.clear()
     if request.method == 'POST':
         if verificaLogin(request.form['email'],request.form['password']):
-            session['email'] = request.form['email']
+            session['name'] = getUname(request.form['email'])
             return redirect(url_for('principal'))
         else:
             error = True
@@ -193,7 +201,7 @@ def registo():
             salt, hash256 = securityProcess(password)
             insertUser(fname,lname,email,salt,hash256,role)
             session.clear()
-            session['email'] = email
+            session['name'] = getUname(email)
             return redirect(url_for('principal', new_User=True))
         else:
             return redirect(url_for('erro'))
@@ -211,21 +219,23 @@ def erro():
 ### Caso mentira redireciona para a pagina de login
 @app.route("/",  methods=['GET', 'POST'])
 def principal():
-    if 'email' in session:
+    if 'name' in session:
+        fullName = session['name'][0]
+        mail=session['name'][1]
         new_User=request.args.get('new_User')
         if new_User == "True":
-            return render_template('main.html', user = session['email'], new_User = True)
-        elif isAdmin(session['email']) == True:
+            return render_template('main.html', user = fullName, new_User = True)
+        elif isAdmin(mail) == True:
             data = getRegister()
             if request.method == 'POST':
                 user = request.form['deluser']
                 adminDelete = apagarUser(user)
                 data = getRegister()
-                return render_template('main.html', user = session['email'], data = data, adminDelete = adminDelete)
+                return render_template('main.html', user = fullName, data = data, adminDelete = adminDelete)
             else:
-                return render_template('main.html', user = session['email'], data = data)
+                return render_template('main.html', user = fullName, data = data)
         else:
-            return render_template('main.html', user = session['email'])
+            return render_template('main.html', user = fullName)
     else:
         return redirect(url_for('login'))
 
