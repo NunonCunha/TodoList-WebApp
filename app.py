@@ -101,13 +101,39 @@ def creatTodo(task,description,start,end,userId):
 
 #Metodo para retornar um dicionario da query (Read)
 ##Return dicionario da tabela todo pelo id do user da sessão
-def gettodobyId(id):
+def gettodobyuserId(id):
     dbase = sql.connect("db_todoApp.db")
     dbase.row_factory=sql.Row
     cursor = dbase.cursor()
     cursor.execute("SELECT * FROM todo WHERE user_Id=?",(id,))
     dado=cursor.fetchall()
     return dado
+
+#Metodo para retornar um dicionario da query (Read)
+##Return dicionario da tabela todo pelo id do todo
+def gettodobyId(id):
+    dbase = sql.connect("db_todoApp.db")
+    dbase.row_factory=sql.Row
+    cursor = dbase.cursor()
+    cursor.execute("SELECT * FROM todo WHERE todo_id=?",(id,))
+    dado=cursor.fetchone()
+    return dado
+
+#Metodo para atualizar uma entrada da DB da tabela todo (Update)
+def updateTodo(id,task,description,start,end):
+    dbase = sql.connect("db_todoApp.db")
+    dbase.row_factory=sql.Row
+    cursor = dbase.cursor()
+    cursor.execute("UPDATE todo SET task=?,task_descrition=?,created_at=?,end_at=? WHERE todo_id=?",(task,description,start,end,id))
+    dado=cursor.fetchone()
+    dbase.commit()
+
+#Metodo para eliminar uma task na DB da tabela todo (Delete)
+def deleteTodo(id):
+    dbase=sql.connect("db_todoApp.db")
+    cursor=dbase.cursor()
+    cursor.execute("DELETE FROM todo WHERE todo_id=?",(id,))
+    dbase.commit()
 
 #Metodo random que retorna uma string aleatorio de 16 caracteres
 def rand():
@@ -133,7 +159,7 @@ def securityProcess(password):
     #Aplicada função hexdigest, para converter o hash em hexa para que a DB possa aceitar
     return salt,hash.hexdigest()
 
-#Verifica de a DB tem um administrador, caso não tenha pede para introduzir dados para criar um administrador
+#Verifica se a DB tem um administrador, caso não tenha pede para introduzir dados para criar um administrador
 mail = ""
 psw = ""
 while checkAdmin() == False:
@@ -262,7 +288,7 @@ def principal():
         fullName = session['name'][0]
         mail=session['name'][1]
         new_User=request.args.get('new_User')
-        todo = gettodobyId(getId(mail))
+        todo = gettodobyuserId(getId(mail))
         if new_User == "True":
             return render_template('main.html', user = fullName, new_User = True)
         elif isAdmin(mail) == True:
@@ -279,7 +305,7 @@ def principal():
     else:
         return redirect(url_for('login'))
 
-#Condições para a pagina principal
+#Condições para a pagina criação todo
 ##Verifica o metodo do render
 ### Se não for post apresenta o html e passa o user da session como argumento
 ### Caso o metodo seja POST recolhe os elementos necessarios para criar task e dá feed back ao utilizador
@@ -297,6 +323,28 @@ def todoCreate():
         return render_template('todo.html', user = fullName , taskCreat = True)
     else:
         return render_template('todo.html', user = fullName)
+
+#Condições para a pagina editar todo
+##Verifica o metodo do render
+### Se não for post apresenta o html e passa a lista com os dados a editar
+### Caso o metodo seja POST recolhe os elementos necessarios para editar task
+@app.route("/edit_todo/<int:id>",methods=['POST','GET'])
+def edit_todo(id):
+    if request.method=='POST':
+        task = request.form['todo']
+        description = request.form['todoDescription']
+        start = request.form['startAt']
+        end = request.form['endAt']
+        updateTodo(id,task,description,start,end)
+        return redirect(url_for("principal"))
+    else:
+        return render_template("edit.html",datas=gettodobyId(id))
+
+#Metodo para obter o id e apagar a task da db
+@app.route("/delete_todo/<int:id>",methods=['GET'])
+def delete_todo(id):
+    deleteTodo(id)
+    return redirect(url_for("principal"))
 
 
 ### Aplicação corre com possibilidade de debug e em contexto de ssl com certificados locais

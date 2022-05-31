@@ -94,11 +94,42 @@ table, th, td{
 
 a:link, a:visited {
 	text-decoration: none
-	}
+}
 a:hover {
 	text-decoration: underline;
 	color: #f00
-	}
+}
 a:active {
 	text-decoration: none
-	}
+}
+.button1 {
+    background-color: #185586;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+    
+.button1:hover {
+    background-color: #023661;
+}
+    
+.button2 {
+    background-color: #dd4237;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+    
+.button2:hover {
+    background-color: #f81302;
+}
+
+#fixed-width{
+    width: 0px; /* Fixar largura mínima */
+}
