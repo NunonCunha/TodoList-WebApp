@@ -65,7 +65,30 @@
             </form>
             </div>
         {% endif %}
+        {%if todo%}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Description</th>
+                        <th>Start at</th>
+                        <th>End At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in todo %}
+                    <tr>
+                        <td>{{ item.task }}</td>
+                        <td>{{ item.task_descrition }}</td>
+                        <td>{{ item.created_at }}</td>
+                        <td>{{ item.end_at }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
         <div class="logout">
+        <p><a href="https://127.0.0.1:5000/todo">Create TODO</a></p>
         <p><a href="https://127.0.0.1:5000/login">Log Out</a></p>
         </div>
     </body>

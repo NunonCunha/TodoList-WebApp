@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>Pratice Login Page</title>
+        <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
+    </head>
+    <body>
+        <h2>TODO</h2>
+        <h2> {{user}} </h2>
+
+        <div class="ok">
+            {%if taskCreat==True%}
+            <p> TODO Criado </p>
+            {% endif %}
+        </div>
+        
+        <div class="login">
+        <form id="login" action="/todo" method="post">
+            <input type="text" 
+                id="todo" 
+                name="todo" value=""
+                placeholder="Title"
+                required><br>
+            <p></p>
+            <input type="text" 
+                id="todoDescription" 
+                name="todoDescription" value=""
+                placeholder="Description"
+                required><br>
+            <p></p>
+            <label for="startAt">Start:</label>
+            <input type="date" 
+                id="startAt" 
+                name="startAt" value=""
+                required><br>
+            <p></p>
+            <label for="endAt">End:</label>
+            <input type="date" 
+                id="endAt" 
+                name="endAt" value=""
+                required><br>
+            <p></p>
+            <input id="submit" type="submit" value="Create">
+        </form>
+        </div>
+        <p><a href="https://127.0.0.1:5000/">Return to main page</a></p>
+    </body>
+</html>

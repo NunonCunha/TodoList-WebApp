@@ -82,6 +82,33 @@ def getUname(mail):
     fullName = dado[0] + ' ' + dado[1]
     return fullName , mail
 
+#Metodo para retirar o id da table da Db atravez do argumento passado (Read)
+##Return int
+def getId(mail):
+    dbase = sql.connect("db_todoApp.db")
+    cursor = dbase.cursor()
+    cursor.execute("SELECT id FROM user WHERE email=?",(mail,))
+    dado=cursor.fetchone()
+    return dado[0]
+
+#Metodo para introduzir um nova task na DB (Create)
+def creatTodo(task,description,start,end,userId):
+    dbase = sql.connect("db_todoApp.db")
+    cursor = dbase.cursor()
+    cursor.execute("""INSERT INTO todo(task, task_descrition, created_at, end_at, user_Id)
+    VALUES (?,?,?,?,?)""",(task,description,start,end,userId))
+    dbase.commit()
+
+#Metodo para retornar um dicionario da query (Read)
+##Return dicionario da tabela todo pelo id do user da sessão
+def gettodobyId(id):
+    dbase = sql.connect("db_todoApp.db")
+    dbase.row_factory=sql.Row
+    cursor = dbase.cursor()
+    cursor.execute("SELECT * FROM todo WHERE user_Id=?",(id,))
+    dado=cursor.fetchall()
+    return dado
+
 #Metodo random que retorna uma string aleatorio de 16 caracteres
 def rand():
     chars = string.ascii_letters+string.digits+string.punctuation
@@ -235,6 +262,7 @@ def principal():
         fullName = session['name'][0]
         mail=session['name'][1]
         new_User=request.args.get('new_User')
+        todo = gettodobyId(getId(mail))
         if new_User == "True":
             return render_template('main.html', user = fullName, new_User = True)
         elif isAdmin(mail) == True:
@@ -247,9 +275,29 @@ def principal():
             else:
                 return render_template('main.html', user = fullName, data = data)
         else:
-            return render_template('main.html', user = fullName)
+            return render_template('main.html', user = fullName , todo = todo)
     else:
         return redirect(url_for('login'))
+
+#Condições para a pagina principal
+##Verifica o metodo do render
+### Se não for post apresenta o html e passa o user da session como argumento
+### Caso o metodo seja POST recolhe os elementos necessarios para criar task e dá feed back ao utilizador
+@app.route("/todo",  methods=['GET', 'POST'])
+def todoCreate():
+    fullName = session['name'][0]
+    mail=session['name'][1]
+    if request.method == 'POST':
+        task = request.form['todo']
+        description = request.form['todoDescription']
+        start = request.form['startAt']
+        end = request.form['endAt']
+        userId=getId(mail)
+        creatTodo(task,description,start,end,userId)
+        return render_template('todo.html', user = fullName , taskCreat = True)
+    else:
+        return render_template('todo.html', user = fullName)
+
 
 ### Aplicação corre com possibilidade de debug e em contexto de ssl com certificados locais
 if __name__ == "__main__":
