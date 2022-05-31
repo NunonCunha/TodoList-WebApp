@@ -98,7 +98,9 @@
             </table>
         {% endif %}
         <div class="logout">
+        {%if not data%}
         <p><a href="https://127.0.0.1:5000/todo">Create TODO</a></p>
+        {%endif%}
         <p><a href="https://127.0.0.1:5000/login">Log Out</a></p>
         </div>
     </body>
