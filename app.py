@@ -4,7 +4,7 @@ import random
 import sqlite3 as sql
 import string
 from datetime import timedelta
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import Flask, jsonify, redirect, render_template, request, session, url_for
 from createDB import create_DB
 
 #Variavel path para abstrair o server side da localização dos ficheiros
@@ -246,7 +246,7 @@ def login():
             return redirect(url_for('principal'))
         else:
             error = True
-            return render_template('login.html', error=error)
+            return jsonify({'error':True}) ##render_template('login.html', error=error)
     return render_template('login.html')
 
 #Condições para a pagina de Registo
