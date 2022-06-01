@@ -1,45 +1,85 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Pratice Login Page</title>
-        <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
-    </head>
-    <body>
-        <h2>Sign Up</h2>
-        
-        <div class="login">
-        <form id="login" action="/registo" method="post">
-            <input type="text" 
-                id="fname" 
-                name="fname" value=""
-                placeholder="First Name"
+  <head>
+    <title>Pratice Login Page</title>
+    <link rel="stylesheet" href="../static/styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1 class="titles">ToDo List <i class="fa-solid fa-list-check"></i></h1>
+      </header>
+
+      <div class="login">
+        <h2 class="titles-level-2">Registo</h2>
+        <div class="login-form">
+          <form id="login" action="/registo" method="post">
+            <div class="input-fname">
+              <label for="fname">Nome</label>
+              <input
+                type="text"
+                id="fname"
+                name="fname"
+                value=""
+                placeholder="Primeiro Nome"
                 minlength="4"
-                required><br>
-            <p></p>
-            <input type="text" 
-                id="lname" 
-                name="lname" value=""
-                placeholder="Last Name"
+                required
+              />
+            </div>
+            <div class="input-lname">
+              <label for="lname">Sobrenome</label>
+              <input
+                type="text"
+                id="lname"
+                name="lname"
+                value=""
+                placeholder="Último Nome"
                 minlength="4"
-                required><br>
-            <p></p>
-            <input type="text" 
-                id="email" 
-                name="email" value=""
+                required
+              />
+            </div>
+            <div class="input-email">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value=""
                 placeholder="Email"
-                minlength="4"
-                required><br>
-            <p></p>
-            <input type="password" 
-                id="password" 
+                required
+              />
+            </div>
+            <div class="input-password">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
                 name="password"
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{12,}"
-                title="Must contain at least one number and one uppercase and lowercase letter and at least 12 or more characters"
+                value=""
                 placeholder="Password"
                 required
-                ><br>
-            <p></p>
-            <input id="submit" type="submit" value="SIGN UP">
-        </form>
+              />
+            <div class="register-button">
+              <input id="submit" type="submit" value="Registar" />
+            </div>
+          </form>
         </div>
-    </body>
+      </div>
+    </div>
+    <div class="rodape">
+      <p>
+        <span>&#169;</span> Trabalho desenvolvido por Leandro Cunha e Nuno Cunha
+      </p>
+    </div>
+  </body>
 </html>
