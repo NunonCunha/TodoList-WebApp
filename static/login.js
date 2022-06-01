@@ -3,6 +3,9 @@ function tratar_recv(data){
         $("#icon").addClass("fa-solid fa-circle-exclamation");
         $("#msgErro").text("Nome do utilizador ou palavra-passe inválido!");
     }
+    else{
+        $(location).prop('href', data['redirect']);
+    }
 }
 
 function submeter_form(){

@@ -243,10 +243,9 @@ def login():
     if request.method == 'POST':
         if verificaLogin(request.form['email'],request.form['password']):
             session['name'] = getUname(request.form['email'])
-            return redirect(url_for('principal'))
+            return jsonify({'error':False,'redirect':url_for('principal')})
         else:
-            error = True
-            return jsonify({'error':True}) ##render_template('login.html', error=error)
+            return jsonify({'error':True})
     return render_template('login.html')
 
 #Condições para a pagina de Registo
