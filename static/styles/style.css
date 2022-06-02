@@ -246,7 +246,7 @@ header{
 
 /* edit ToDo */
 
-.task-box{
+.edit-task-box{
     display: inline;
 }
 
@@ -264,5 +264,44 @@ header{
 .ok p{
     color: green;
 }
+
+.create-task-box{
+    display: inline;
+}
+
+.create-input-box{
+    border-radius: 5px;
+    border: 1px solid  #D6CCC2;
+    font-size: 1.4em;
+    color: #37393A; 
+    text-align: center;
+    margin-right: 10px;
+}
+
+.create-task{
+    text-align: right; 
+    margin: 1px;   
+    position: fixed;
+    bottom: 30px;
+    left: 50px;
+}
+
+.create-task a{
+    color: #F5EBE0;
+    border: 1px solid #0FA3B1;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #0FA3B1;
+    transition: 0.5s;
+}
+
+.create-task a:hover{
+    color: #37393A;
+    background-color: #D6CCC2;
+    border-color: #D6CCC2;
+    padding: 15px;
+}
+
+
 
 

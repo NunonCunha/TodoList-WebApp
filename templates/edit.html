@@ -23,33 +23,33 @@
             </div> 
             <div class="edit">
                 <form id="login" action='{{url_for("edit_todo",id=datas.todo_id)}}' method="post">
-                    <div class="task-box">
+                    <div class="edit-task-box">
                         <input class="edit-input-box" type="text" 
                         id="todo" 
                         name="todo" value='{{datas.task}}'
                         required>
                     </div>
-                    <div class="task-box">
+                    <div class="edit-task-box">
                         <input class="edit-input-box" class="task-box" type="text" 
                         id="todoDescription" 
                         name="todoDescription" value='{{datas.task_descrition}}'
                         required>
                     </div>
-                    <div class="task-box">
+                    <div class="edit-task-box">
                         <label for="startAt">Start:</label>
                         <input class="edit-input-box" type="date" 
                         id="startAt" 
                         name="startAt" value='{{datas.created_at}}'
                         required>
                     </div>
-                    <div class="task-box">
+                    <div class="edit-task-box">
                         <label for="endAt">End:</label>
                         <input class="edit-input-box" type="date" 
                         id="endAt" 
                         name="endAt" value='{{datas.end_at}}'
                         required>
                     </div>
-                    <div class="task-box">
+                    <div class="edit-task-box">
                         <input id="submit" type="submit" value="Gravar">
                     </div>
                 </form>

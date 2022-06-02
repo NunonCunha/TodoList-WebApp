@@ -12,6 +12,7 @@
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         />
+        <script type=text/javascript src="{{ url_for('static', filename='login.js') }}"> </script>
     </head>
     <body>
         <div class="container">
@@ -20,44 +21,51 @@
             </header>
             <div>
                 <h2>Criar Tarefa</h2> 
-            </div> 
-        
+            </div>        
 
         <div class="ok">
             {%if taskCreat==True%}
-            <p> Tarefa Criada com sucesso </p>
+            <p> <span><i class="fa-solid fa-circle-check"></i></span> Tarefa Criada com sucesso </p>
             {% endif %}
         </div>
         
-        <div class="login">
-        <form id="login" action="/todo" method="post">
-            <input type="text" 
-                id="todo" 
-                name="todo" value=""
-                placeholder="Title"
-                required><br>
-            <p></p>
-            <input type="text" 
-                id="todoDescription" 
-                name="todoDescription" value=""
-                placeholder="Description"
-                required><br>
-            <p></p>
-            <label for="startAt">Start:</label>
-            <input type="date" 
-                id="startAt" 
-                name="startAt" value=""
-                required><br>
-            <p></p>
-            <label for="endAt">End:</label>
-            <input type="date" 
-                id="endAt" 
-                name="endAt" value=""
-                required><br>
-            <p></p>
-            <input id="submit" type="submit" value="Create">
-        </form>
+        <div class="create">
+            <form id="login" action="/todo" method="post">
+                <div class="create-task-box">
+                    <input class="create-input-box" type="text" 
+                    id="todo" 
+                    name="todo" value=""
+                    placeholder="Title"
+                    required>
+                </div>
+                <div class="create-task-box">
+                    <input class="create-input-box" type="text" 
+                    id="todoDescription" 
+                    name="todoDescription" value=""
+                    placeholder="Description"
+                    required>
+                </div>
+                <div class="create-task-box">
+                    <label for="startAt">Start:</label>
+                    <input class="create-input-box" type="date" 
+                    id="startAt" 
+                    name="startAt" value=""
+                    required>
+                </div>
+                <div class="create-task-box">
+                    <label for="endAt">End:</label>
+                    <input class="create-input-box" type="date" 
+                    id="endAt" 
+                    name="endAt" value=""
+                    required>
+                </div>
+                <div class="create-task-box">
+                    <input id="submit" type="submit" value="Create">
+                </div>
+            </form>
         </div>
-        <p><a href="https://127.0.0.1:5000/">Return to main page</a></p>
+        <div class="create-task">
+            <p><a href="https://127.0.0.1:5000/">Return to main page</a></p>
+        </div>
     </body>
 </html>
