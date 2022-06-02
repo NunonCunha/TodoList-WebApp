@@ -1,15 +1,31 @@
 <html>
     <head>
         <title>Pratice Login Page</title>
-        <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
+        <link rel="stylesheet" href="../static/styles/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        />
     </head>
     <body>
-        <h2>TODO</h2>
-        <h2> {{user}} </h2>
+        <div class="container">
+            <header>
+              <h1 class="titles">ToDo List <i class="fa-solid fa-list-check"></i></h1>
+            </header>
+            <div>
+                <h2>Criar Tarefa</h2> 
+            </div> 
+        
 
         <div class="ok">
             {%if taskCreat==True%}
-            <p> TODO Criado </p>
+            <p> Tarefa Criada com sucesso </p>
             {% endif %}
         </div>
         

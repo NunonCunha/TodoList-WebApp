@@ -1,107 +1,147 @@
 <html>
-    <head>
-        <title>Pratice Login Page</title>
-        <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
-        <script type="text/javascript" src="javascript.js"></script>
-        
-        <script> function showAlert() {
-            alert("Registo Efetuado com Sucesso");
-          } </script>
+  <head>
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <script type="text/javascript" src="javascript.js"></script>
 
-        
-    </head>
-    <body {%if new_User%} onload="showAlert()" {% endif %}>
-        <h1>Pratice Web Site</h1>
-        <h2>Welcome {{user}} </h2>
-        <a target="_blank" href="https://www.booked.net/weather/lisbon-18257"><img src="https://w.bookcdn.com/weather/picture/32_18257_1_1_34495e_250_2c3e50_ffffff_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=w209&anc_id=96715"  alt="booked.net" class="center"/></a>
+    <script>
+      function showAlert() {
+        alert("Registo Efetuado com Sucesso");
+      }
+    </script>
+  </head>
+  <body {%if new_User%} onload="showAlert()" {% endif %}>
+    <div class="container">
+      <header>
+        <h1 class="titles">ToDo List <i class="fa-solid fa-list-check"></i></h1>
+      </header>
+      <div>
+        <h2>Tarefas de {{user}}</h2>
 
         <div class="date" id="current_date">
-        <script>
+          <script>
             document.getElementById("current_date").innerHTML = Date();
-            </script>
+          </script>
         </div>
-        <div class="errodel">
-            {%if adminDelete==False%}
-            <p> Não foi possivel remover o utilizador! </p>
-            {% endif %}
-        </div>
-        <div class="ok">
-            {%if adminDelete==True%}
-            <p> Utilizador removido </p>
-            {% endif %}
-        </div>
-        {%if data%}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Email</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Salt</th>
-                        <th>Password(Sha256)</th>
-                        <th>Role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for item in data %}
-                    <tr>
-                        <td>{{ item.email }}</td>
-                        <td>{{ item.first_name }}</td>
-                        <td>{{ item.last_name }}</td>
-                        <td>{{ item.salt }}</td>
-                        <td>{{ item.password_hash }}</td>
-                        <td>{{ item.role }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            <div class="delete">
-            <form id="login" action="/" method="post">
-                <input type="text" 
-                    id="deluser" 
-                    name="deluser"
-                    placeholder="Name">
-                <input id="submit" type="submit" value="Delete">
-            </form>
-            </div>
+      </div>
+      <!-- <div class="errodel">
+        {%if adminDelete==False%}
+        <p>Não foi possivel remover o utilizador!</p>
         {% endif %}
+      </div>
+      <div class="ok">
+        {%if adminDelete==True%}
+        <p>Utilizador removido</p>
+        {% endif %}
+      </div>
+      {%if data%} -->
+      <!-- <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Salt</th>
+              <th>Password(Sha256)</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in data %}
+            <tr>
+              <td>{{ item.email }}</td>
+              <td>{{ item.first_name }}</td>
+              <td>{{ item.last_name }}</td>
+              <td>{{ item.salt }}</td>
+              <td>{{ item.password_hash }}</td>
+              <td>{{ item.role }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="delete">
+        <form id="login" action="/" method="post">
+          <input type="text" id="deluser" name="deluser" placeholder="Name" />
+          <input id="submit" type="submit" value="Delete" />
+        </form>
+      </div> 
+      {% endif %}-->
+      <div class="table-container">
         {%if todo%}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Task</th>
-                        <th>Description</th>
-                        <th>Start at</th>
-                        <th>End At</th>
-                        <th></th> <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for item in todo %}
-                    <tr>
-                        <td>{{ item.task }}</td>
-                        <td>{{ item.task_descrition }}</td>
-                        <td>{{ item.created_at }}</td>
-                        <td>{{ item.end_at }}</td>
-                        <td id='fixed-width'> 
-                            <form method='GET' action='{{url_for("edit_todo",id=item.todo_id)}}'> 
-                                <button class='button1'> Editar </button> </form> 
-                        </td>
-                        <td id='fixed-width'>
-                            <form method='GET' action='{{url_for("delete_todo",id=item.todo_id)}}'> 
-                                <button class='button2' onclick='return confirm("Tem certeza que deseja remover?")'> × </button> 
-                            </form> 
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        <!-- TODO: alterar a tag e utilizar Css -->
+        <!-- <center> -->
+        <table class="tabela-tarefas">
+          <thead>
+            <tr>
+              <th>Tarefa</th>
+              <th>Descrição</th>
+              <th>Início</th>
+              <th>Fim</th>
+              <!-- <th></th>
+                <th></th> -->
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in todo %}
+            <tr>
+              <td class="espacamento">{{ item.task }}</td>
+              <td class="espacamento">{{ item.task_descrition }}</td>
+              <td class="espacamento">{{ item.created_at }}</td>
+              <td class="espacamento">{{ item.end_at }}</td>
+              <td id="fixed-width" class="button-spacing">
+                <form
+                  method="GET"
+                  action='{{url_for("edit_todo",id=item.todo_id)}}'
+                >
+                  <button class="button1, button-editar">Editar</button>
+                </form>
+              </td>
+              <td class="button-spacing-2" id="fixed-width">
+                <form
+                  method="GET"
+                  action='{{url_for("delete_todo",id=item.todo_id)}}'
+                >
+                  <button
+                    class="button2, button-delete"
+                    onclick='return confirm("Tem a certeza que deseja remover?")'
+                  >
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <!-- </center> -->
         {% endif %}
-        <div class="logout">
+      </div>
+      <div class="create-todo">
         {%if not data%}
-        <p><a href="https://127.0.0.1:5000/todo">Create TODO</a></p>
+        <p>
+          <a href="https://127.0.0.1:5000/todo"
+            >Criar Tarefa <span><i class="fa-solid fa-plus"></i></span
+          ></a>
+        </p>
         {%endif%}
-        <p><a href="https://127.0.0.1:5000/login">Log Out</a></p>
-        </div>
-    </body>
+      </div>
+      <div class="log-out">
+        <p>
+          <a href="https://127.0.0.1:5000/login">Log Out</a>
+        </p>
+      </div>
+    </div>
+  </body>
 </html>

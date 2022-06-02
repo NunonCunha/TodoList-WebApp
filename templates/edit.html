@@ -1,35 +1,58 @@
 <html>
     <head>
-        <title>Pratice Todo Web App</title>
-        <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
+        <title>Editar Tarefa</title>
+        <link rel="stylesheet" href="../static/styles/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        />
     </head>
     <body>
-        <h2>Edit Task</h2>    
-        <div class="login">
-            <form id="login" action='{{url_for("edit_todo",id=datas.todo_id)}}' method="post">
-                <input type="text" 
-                    id="todo" 
-                    name="todo" value='{{datas.task}}'
-                    required><br>
-                <p></p>
-                <input type="text" 
-                    id="todoDescription" 
-                    name="todoDescription" value='{{datas.task_descrition}}'
-                    required><br>
-                <p></p>
-                <label for="startAt">Start:</label>
-                <input type="date" 
-                    id="startAt" 
-                    name="startAt" value='{{datas.created_at}}'
-                    required><br>
-                <p></p>
-                <label for="endAt">End:</label>
-                <input type="date" 
-                    id="endAt" 
-                    name="endAt" value='{{datas.end_at}}'
-                    required><br>
-                <p></p>
-                <input id="submit" type="submit" value="Gravar">
-            </form>
+        <div class="container">
+            <header>
+              <h1 class="titles">ToDo List <i class="fa-solid fa-list-check"></i></h1>
+            </header>
+            <div>
+                <h2>Editar Tarefa</h2>   
+            </div> 
+            <div class="edit">
+                <form id="login" action='{{url_for("edit_todo",id=datas.todo_id)}}' method="post">
+                    <div class="task-box">
+                        <input class="edit-input-box" type="text" 
+                        id="todo" 
+                        name="todo" value='{{datas.task}}'
+                        required>
+                    </div>
+                    <div class="task-box">
+                        <input class="edit-input-box" class="task-box" type="text" 
+                        id="todoDescription" 
+                        name="todoDescription" value='{{datas.task_descrition}}'
+                        required>
+                    </div>
+                    <div class="task-box">
+                        <label for="startAt">Start:</label>
+                        <input class="edit-input-box" type="date" 
+                        id="startAt" 
+                        name="startAt" value='{{datas.created_at}}'
+                        required>
+                    </div>
+                    <div class="task-box">
+                        <label for="endAt">End:</label>
+                        <input class="edit-input-box" type="date" 
+                        id="endAt" 
+                        name="endAt" value='{{datas.end_at}}'
+                        required>
+                    </div>
+                    <div class="task-box">
+                        <input id="submit" type="submit" value="Gravar">
+                    </div>
+                </form>
+            </div>
     </body>
 </html>

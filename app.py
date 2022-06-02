@@ -230,7 +230,7 @@ def apagarUser(email):
 #Define um timeout antes da request ao servidor
 @app.before_request
 def session_timetout():
-    app.permanent_session_lifetime = timedelta(minutes=5)
+    app.permanent_session_lifetime = timedelta(minutes=100)
 
 #Condições para pagina de login
 ##Sempre que a url seja só login sem nenhum metodo retorna o html do login

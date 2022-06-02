@@ -37,8 +37,7 @@ header{
     background-color: #D6CCC2;
     border-radius: 20px;
     padding: 10px;
-    box-shadow: #37393A 0px 2px 15px ;
-    
+    box-shadow: #37393A 0px 2px 15px ;    
 }
 
 .login-form input{
@@ -60,22 +59,8 @@ header{
     color: #37393A; 
 }
 
-.input-fname label{
-    padding-right: 67px;
-    font-size: 1.4em;
-    color: #37393A; 
-}
-.input-lname label{
-    padding-right:5px;
-    font-size: 1.4em;
-    color: #37393A;    
-}
-
 .login-button{
     margin-top: 35px;
-}
-.register-button{
-    margin: 35px;
 }
 
 #submit{
@@ -91,7 +76,8 @@ header{
 
 #submit:hover{
     color: #EDEDE9;
-    background-color: #0FA3B1;    
+    background-color: #0FA3B1;
+    border: none;    
 }
 
 .erro{
@@ -102,6 +88,15 @@ header{
     display: inline-block;
     margin-left: 5px;
 }
+
+.rodape{
+    color: #37393A;
+    font-size: .8em;
+    margin-top: 20px;
+}
+
+
+/* registo.html */
 
 .registo p{
     color: #37393A;
@@ -121,9 +116,153 @@ header{
     color: #F5EBE0;
 }
 
-.rodape{
-    color: #37393A;
-    font-size: .8em;
-    margin-top: 20px;
+.register-button{
+    margin: 35px;
 }
+
+.input-fname label{
+    padding-right: 67px;
+    font-size: 1.4em;
+    color: #37393A; 
+}
+.input-lname label{
+    padding-right:5px;
+    font-size: 1.4em;
+    color: #37393A;    
+}
+
+/* main.html */
+
+.log-out{
+    text-align: right; 
+    margin: 1px;   
+    position: fixed;
+    bottom: 30px;
+    right: 50px;
+}
+
+.log-out a{
+    color: #D6CCC2;
+    border: 1px solid #37393A;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #37393A;
+    transition: 0.5s;
+}
+
+.log-out a:hover{
+    color: #37393A;
+    background-color: #D6CCC2;
+    border-color: #D6CCC2;
+    padding: 15px;
+}
+
+.create-todo{
+    text-align: right; 
+    margin: 1px;   
+    position: fixed;
+    bottom: 30px;
+    left: 50px;
+}
+
+.create-todo a{
+    color: #F5EBE0;
+    border: 1px solid #0FA3B1;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #0FA3B1;
+    transition: 0.5s;
+}
+
+.create-todo a:hover{
+    color: #37393A;
+    background-color: #D6CCC2;
+    border-color: #D6CCC2;
+    padding: 15px;
+}
+
+.tabela-tarefas{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    table-layout: auto;
+}
+
+.tabela-tarefas th{
+    background-color: #0FA3B1;
+    color: #EDEDE9;
+    font-size: 1.2em;
+    font-weight: 100;
+    padding: 10px;   
+    border-radius: 15px; 
+}
+
+.tabela-tarefas td{
+    text-align: center;   
+    font-size: 1.1em;    
+}
+
+.espacamento{
+    padding: 10px;
+    border-bottom: 1px solid #37393A;
+}
+
+.button-spacing{
+    padding: 10px 5px 10px 10px;
+}
+.button-spacing-2{
+    padding: 10px 10px 10px 10px;
+}
+
+.button-editar{
+    color: #D6CCC2;
+    border: 1px solid #37393A;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #37393A;
+    transition: 0.4s;
+}
+
+.button-editar:hover{
+    color: #37393A;
+    background-color: #D6CCC2;
+    border-color: #D6CCC2;
+}
+
+.button-delete{
+    color: #D6CCC2;
+    border: 1px solid #37393A;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #37393A;
+    transition: 0.4s;
+}
+
+.button-delete:hover{
+    color: #37393A;
+    background-color: #D6CCC2;
+    border-color: #D6CCC2;
+}
+
+/* edit ToDo */
+
+.task-box{
+    display: inline;
+}
+
+.edit-input-box{
+    border-radius: 5px;
+    border: 1px solid  #D6CCC2;
+    font-size: 1.4em;
+    color: #37393A; 
+    text-align: center;
+    margin-right: 10px;
+}
+
+/* Criar tarefa */
+
+.ok p{
+    color: green;
+}
+
 
