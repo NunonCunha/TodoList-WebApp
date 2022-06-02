@@ -13,6 +13,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     />
+    <script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"> </script>
+    <script type=text/javascript src="{{ url_for('static', filename='login.js') }}"> </script>
+    <script type=text/javascript>
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
   </head>
   <body>
     <div class="container">
@@ -47,15 +52,13 @@
               />
             </div>
             <div class="login-button">
-              <input id="submit" type="submit" value="LOG IN" />
+              <input id="submit" type="button" value="LOG IN" />
             </div>
             <div class="erro">
-              {%if error%}
               <div class="erro-text">
-                <i class="fa-solid fa-circle-exclamation"></i>
-                <p>Nome do utilizador ou palavra-passe inválido!</p>
+                <br><i id="icon"></i>
+                <span id="msgErro"></span> <br>
               </div>
-              {% endif %}
             </div>
             <div class="registo">
               <p>
