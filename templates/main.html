@@ -34,7 +34,7 @@
           </script>
         </div>
       </div>
-      <!-- <div class="errodel">
+      <div class="errodel">
         {%if adminDelete==False%}
         <p>Não foi possivel remover o utilizador!</p>
         {% endif %}
@@ -44,40 +44,44 @@
         <p>Utilizador removido</p>
         {% endif %}
       </div>
-      {%if data%} -->
-      <!-- <div>
-        <table>
+      {%if data%}
+      <div>
+        <table class="tabela-tarefas">
           <thead>
             <tr>
-              <th>Email</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Salt</th>
-              <th>Password(Sha256)</th>
-              <th>Role</th>
+              <th style="cursor: pointer" onclick="sortTable(0)">Email</th>
+              <th style="cursor: pointer" onclick="sortTable(1)">First Name</th>
+              <th style="cursor: pointer" onclick="sortTable(2)">Last Name</th>
+              <th style="cursor: pointer" onclick="sortTable(3)">Role</th>
             </tr>
           </thead>
           <tbody>
             {% for item in data %}
             <tr>
-              <td>{{ item.email }}</td>
-              <td>{{ item.first_name }}</td>
-              <td>{{ item.last_name }}</td>
-              <td>{{ item.salt }}</td>
-              <td>{{ item.password_hash }}</td>
-              <td>{{ item.role }}</td>
+              <td class="espacamento">{{ item.email }}</td>
+              <td class="espacamento">{{ item.first_name }}</td>
+              <td class="espacamento">{{ item.last_name }}</td>
+              <td class="espacamento">{{ item.role }}</td>
+              <td class="button-spacing-2" id="fixed-width">
+                <form
+                  method="GET"
+                  action='{{url_for("deleteUser",id=item.id)}}'
+                >
+                  <button
+                    style="cursor: pointer"
+                    class="button2, button-delete"
+                    onclick='return confirm("Tem a certeza que deseja remover?")'
+                  >
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </form>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
-      <div class="delete">
-        <form id="login" action="/" method="post">
-          <input type="text" id="deluser" name="deluser" placeholder="Name" />
-          <input id="submit" type="submit" value="Delete" />
-        </form>
-      </div> 
-      {% endif %}-->
+      {% endif %}
       <div class="table-container">
         {%if todo%}
         <!-- TODO: alterar a tag e utilizar Css -->
@@ -89,8 +93,6 @@
               <th style="cursor: pointer" onclick="sortTable(1)">Descrição</th>
               <th style="cursor: pointer" onclick="sortTable(2)">Início</th>
               <th style="cursor: pointer" onclick="sortTable(3)">Fim</th>
-              <!-- <th></th>
-                <th></th> -->
             </tr>
           </thead>
           <tbody>

@@ -40,7 +40,7 @@ def getRegister():
     dbase = sql.connect("db_todoApp.db")
     dbase.row_factory=sql.Row
     cursor = dbase.cursor()
-    cursor.execute("SELECT * FROM user")
+    cursor.execute("SELECT * FROM user WHERE role='Bussiness'")
     dado=cursor.fetchall()
     return dado
 
@@ -310,18 +310,21 @@ def principal():
 ### Caso o metodo seja POST recolhe os elementos necessarios para criar task e dá feed back ao utilizador
 @app.route("/todo",  methods=['GET', 'POST'])
 def todoCreate():
-    mail=session['name'][1]
-    if request.method == 'POST':
-        task = request.form['todo']
-        description = request.form['todoDescription']
-        start = request.form['startAt']
-        end = request.form['endAt']
-        userId=getId(mail)
-        creatTodo(task,description,start,end,userId)
-        return jsonify({'taskCreat':True})
-        #render_template('todo.html', user = fullName , taskCreat = True)
+    if 'name' in session:
+        mail=session['name'][1]
+        if request.method == 'POST':
+            task = request.form['todo']
+            description = request.form['todoDescription']
+            start = request.form['startAt']
+            end = request.form['endAt']
+            userId=getId(mail)
+            creatTodo(task,description,start,end,userId)
+            return jsonify({'taskCreat':True})
+            #render_template('todo.html', user = fullName , taskCreat = True)
+        else:
+            return render_template('todo.html')
     else:
-        return render_template('todo.html')
+        return redirect(url_for('login'))
 
 #Condições para a pagina editar todo
 ##Verifica o metodo do render
@@ -329,20 +332,29 @@ def todoCreate():
 ### Caso o metodo seja POST recolhe os elementos necessarios para editar task
 @app.route("/edit_todo/<int:id>",methods=['POST','GET'])
 def edit_todo(id):
-    if request.method=='POST':
-        task = request.form['todo']
-        description = request.form['todoDescription']
-        start = request.form['startAt']
-        end = request.form['endAt']
-        updateTodo(id,task,description,start,end)
-        return redirect(url_for("principal"))
+    if 'name' in session:
+        if request.method=='POST':
+            task = request.form['todo']
+            description = request.form['todoDescription']
+            start = request.form['startAt']
+            end = request.form['endAt']
+            updateTodo(id,task,description,start,end)
+            return redirect(url_for("principal"))
+        else:
+            return render_template("edit.html",datas=gettodobyId(id))
     else:
-        return render_template("edit.html",datas=gettodobyId(id))
+        return redirect(url_for('login'))
 
 #Metodo para obter o id e apagar a task da db
 @app.route("/delete_todo/<int:id>",methods=['GET'])
 def delete_todo(id):
     deleteTodo(id)
+    return redirect(url_for("principal"))
+
+#Metodo para obter o id e apagar a user com role bussiness da DB
+@app.route("/delete_user/<int:id>",methods=['GET'])
+def deleteUser(id):
+    delete_user(id)
     return redirect(url_for("principal"))
 
 
