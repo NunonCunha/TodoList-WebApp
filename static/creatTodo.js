@@ -1,3 +1,8 @@
+/*
+*Cria função que o receber o json do servidor verifica se na data vem true
+*Caso a condição confirme executa o corpo da função
+*Limpa valores do formuario e apresenta icons e mensagens no html
+*/ 
 function tratar_recv(data) {
     if (data["taskCreat"] == true) {
       $("#iconOK").addClass("fa-solid fa-circle-check");
@@ -10,6 +15,13 @@ function tratar_recv(data) {
     } 
   }
   
+/*
+*Cria função recebe dados do formulario do html
+*Feito condição para validar se existe informação em todos os campos do formulario
+*Se a condição não for cumprida apresenta uma mensagem no html
+*Se a confição for cumprida cria um json e envia para o servidor
+*/ 
+
   function createTodo_form() {
     val_todo = $('input[name="todo"]').val();
     val_descrition = $('input[name="todoDescription"]').val();
@@ -24,6 +36,10 @@ function tratar_recv(data) {
     }
   }
   
+/*
+*Função associado ao botão do html 
+*/
+
   $(function () {
     $("#submit").click(createTodo_form);
   });
