@@ -12,7 +12,11 @@
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         />
-        <script type=text/javascript src="{{ url_for('static', filename='login.js') }}"> </script>
+        <script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"> </script>
+        <script type=text/javascript src="{{ url_for('static', filename='creatTodo.js') }}"> </script>
+        <script type=text/javascript>
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        </script>
     </head>
     <body>
         <div class="container">
@@ -24,9 +28,8 @@
             </div>        
 
         <div class="ok">
-            {%if taskCreat==True%}
-            <p> <span><i class="fa-solid fa-circle-check"></i></span> Tarefa Criada com sucesso </p>
-            {% endif %}
+            <br><i id="iconOK"></i>
+            <span id="msgOK"></span><br>
         </div>
         
         <div class="create">
@@ -60,7 +63,7 @@
                     required>
                 </div>
                 <div class="create-task-box">
-                    <input id="submit" type="submit" value="Create">
+                    <input id="submit" type="button" value="Create">
                 </div>
             </form>
         </div>

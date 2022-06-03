@@ -310,7 +310,6 @@ def principal():
 ### Caso o metodo seja POST recolhe os elementos necessarios para criar task e dá feed back ao utilizador
 @app.route("/todo",  methods=['GET', 'POST'])
 def todoCreate():
-    fullName = session['name'][0]
     mail=session['name'][1]
     if request.method == 'POST':
         task = request.form['todo']
@@ -319,9 +318,10 @@ def todoCreate():
         end = request.form['endAt']
         userId=getId(mail)
         creatTodo(task,description,start,end,userId)
-        return render_template('todo.html', user = fullName , taskCreat = True)
+        return jsonify({'taskCreat':True})
+        #render_template('todo.html', user = fullName , taskCreat = True)
     else:
-        return render_template('todo.html', user = fullName)
+        return render_template('todo.html')
 
 #Condições para a pagina editar todo
 ##Verifica o metodo do render
