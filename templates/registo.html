@@ -20,6 +20,9 @@
         <h1 class="titles">ToDo List <i class="fa-solid fa-list-check"></i></h1>
       </header>
 
+      <!-- Aplicação de dimensão minima para criação do utilizador e os pattern cria logica no input da password
+        serve para criar uma logica de segurança no input do user -->
+
       <div class="login">
         <h2 class="titles-level-2">Registo</h2>
         <div class="login-form">
@@ -67,6 +70,8 @@
                 name="password"
                 value=""
                 placeholder="Password"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{12,}"
+                title="Must contain at least one number and one uppercase and lowercase letter and at least 12 or more characters"
                 required
               />
             <div class="register-button">

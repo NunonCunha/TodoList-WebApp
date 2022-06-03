@@ -215,18 +215,6 @@ def verificaMail(email):
     else:
         return False
 
-#Metodo para apagar utilizador da DB
-#Retorna boolean
-def apagarUser(email):
-    user = findmail(email)
-    if user is None:
-        return False
-    elif 'Bussiness' in user :
-        delete_user(user[0])
-        return True
-    else:
-        return False
-
 #Define um timeout antes da request ao servidor
 @app.before_request
 def session_timetout():
@@ -292,13 +280,7 @@ def principal():
             return render_template('main.html', user = fullName, new_User = True)
         elif isAdmin(mail) == True:
             data = getRegister()
-            if request.method == 'POST':
-                user = request.form['deluser']
-                adminDelete = apagarUser(user)
-                data = getRegister()
-                return render_template('main.html', user = fullName, data = data, adminDelete = adminDelete)
-            else:
-                return render_template('main.html', user = fullName, data = data)
+            return render_template('main.html', user = fullName, data = data)
         else:
             return render_template('main.html', user = fullName , todo = todo)
     else:

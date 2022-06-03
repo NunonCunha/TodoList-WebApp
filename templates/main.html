@@ -14,39 +14,38 @@
     />
     <script type="text/javascript" src="javascript.js"></script>
 
+    <!-- Este script envia um alerta ao utilizador -->
     <script>
       function showAlert() {
         alert("Registo Efetuado com Sucesso");
       }
     </script>
   </head>
+  <!-- Antes de construir o body verifica se o servidor informou se é um novo utilizador, caso seja verdade executa o script -->
   <body {%if new_User%} onload="showAlert()" {% endif %}>
     <div class="container">
       <header>
         <h1 class="titles">ToDo List <i class="fa-solid fa-list-check"></i></h1>
       </header>
       <div>
+        <!-- Apresenta o nome do utilizador enviado pelo servidor caso não receba dados da variavel data -->
+        {%if not data%}
         <h2>Tarefas de {{user}}</h2>
-
+        <!-- Class para apresentar a data e hora atual -->
         <div class="date" id="current_date">
           <script>
             document.getElementById("current_date").innerHTML = Date();
           </script>
         </div>
-      </div>
-      <div class="errodel">
-        {%if adminDelete==False%}
-        <p>Não foi possivel remover o utilizador!</p>
         {% endif %}
       </div>
-      <div class="ok">
-        {%if adminDelete==True%}
-        <p>Utilizador removido</p>
-        {% endif %}
-      </div>
+      <!-- Apresenta as funções do administrador, apresenta nome e a tabela da DB com os users com role bussiness caso receba dados da variavel data -->
+      <!-- Existe a possibilidade de eleminir utilizadores -->
       {%if data%}
+      <h2>Pagina do Administrador</h2>
+      <h3>Olá {{user}}</h3>
       <div>
-        <table class="tabela-tarefas">
+        <table id="tarefas" class="tabela-tarefas">
           <thead>
             <tr>
               <th style="cursor: pointer" onclick="sortTable(0)">Email</th>
@@ -67,6 +66,7 @@
                   method="GET"
                   action='{{url_for("deleteUser",id=item.id)}}'
                 >
+                  <!-- Este script executa um alert de confirmação -->
                   <button
                     style="cursor: pointer"
                     class="button2, button-delete"
@@ -83,6 +83,8 @@
       </div>
       {% endif %}
       <div class="table-container">
+        <!-- Apresenta a tabela da DB do utilizador logado com todas as tasks caso receba dados da variavel todo do servidor -->
+        <!-- Existe a possibilidade de eliminar e editar tasks -->
         {%if todo%}
         <!-- TODO: alterar a tag e utilizar Css -->
         <!-- <center> -->
