@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Home</title>
+    <!-- Carregamento de fontes da google -->
     <link rel="stylesheet" href="../static/styles/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -8,6 +9,8 @@
       href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
       rel="stylesheet"
     />
+    <!-- Carregamento de icons especiais
+        referência: https://fontawesome.com/icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -48,6 +51,7 @@
         <table id="tarefas" class="tabela-tarefas">
           <thead>
             <tr>
+              <!-- Chamada da funçõ que faz o sort da tabela quando é clicado o campo do título -->
               <th style="cursor: pointer" onclick="sortTable(0)">Email</th>
               <th style="cursor: pointer" onclick="sortTable(1)">First Name</th>
               <th style="cursor: pointer" onclick="sortTable(2)">Last Name</th>
@@ -57,6 +61,7 @@
           <tbody>
             {% for item in data %}
             <tr>
+              <!-- Carregamento dos dados provenientes da base de dados -->
               <td class="espacamento">{{ item.email }}</td>
               <td class="espacamento">{{ item.first_name }}</td>
               <td class="espacamento">{{ item.last_name }}</td>
@@ -86,11 +91,11 @@
         <!-- Apresenta a tabela da DB do utilizador logado com todas as tasks caso receba dados da variavel todo do servidor -->
         <!-- Existe a possibilidade de eliminar e editar tasks -->
         {%if todo%}
-        <!-- TODO: alterar a tag e utilizar Css -->
-        <!-- <center> -->
+
         <table id="tarefas" class="tabela-tarefas">
           <thead>
             <tr>
+              <!-- Chamada da funçõ que faz o sort da tabela quando é clicado o campo do título -->
               <th style="cursor: pointer" onclick="sortTable(0)">Tarefa</th>
               <th style="cursor: pointer" onclick="sortTable(1)">Descrição</th>
               <th style="cursor: pointer" onclick="sortTable(2)">Início</th>
@@ -100,11 +105,13 @@
           <tbody>
             {% for item in todo %}
             <tr>
+              <!-- Carregamento dos dados provenientes da base de dados -->
               <td class="espacamento">{{ item.task }}</td>
               <td class="espacamento">{{ item.task_descrition }}</td>
               <td class="espacamento">{{ item.created_at }}</td>
               <td class="espacamento">{{ item.end_at }}</td>
               <td id="fixed-width" class="button-spacing">
+                <!-- Form para tratar os métodos executados pelos botões de Editar e Eliminar -->
                 <form
                   method="GET"
                   action='{{url_for("edit_todo",id=item.todo_id)}}'
@@ -135,9 +142,9 @@
             {% endfor %}
           </tbody>
         </table>
-        <!-- </center> -->
         {% endif %}
       </div>
+      <!-- Botão para Criar a tarefa -->
       <div class="create-todo">
         {%if not data%}
         <p>
@@ -147,6 +154,7 @@
         </p>
         {%endif%}
       </div>
+      <!-- Botão para sair -->
       <div class="log-out">
         <p>
           <a href="https://127.0.0.1:5000/login">Sair</a>
@@ -168,49 +176,49 @@
           switchcount = 0;
         table = document.getElementById("tarefas");
         switching = true;
-        // Set the sorting direction to ascending:
+        // Define a ordem do sort, ascendente ou descendente:
         dir = "asc";
-        /* Make a loop that will continue until
-        no switching has been done: */
+        /* 
+        Loop que só termina quando o switching for true*/
         while (switching) {
-          // Start by saying: no switching is done:
+          // inicio da variável a false:
           switching = false;
           rows = table.rows;
-          /* Loop through all table rows (except the
-          first, which contains table headers): */
+          /* 
+          Percorre toda a tabela excepto a tabela que contém o cabeçalho*/
           for (i = 1; i < rows.length - 1; i++) {
-            // Start by saying there should be no switching:
+            // inicio da variavel para trocar a false
             shouldSwitch = false;
-            /* Get the two elements you want to compare,
-            one from current row and one from the next: */
+            /* 
+            Obtém e compara dois elementos, um da linha atual e outro da proxima linha*/
             x = rows[i].getElementsByTagName("TD")[n];
             y = rows[i + 1].getElementsByTagName("TD")[n];
-            /* Check if the two rows should switch place,
-            based on the direction, asc or desc: */
+            /* 
+            validação para saber se os objectos devem ser alterados ou não com base na direção, ascendente ou descendente*/
             if (dir == "asc") {
               if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                // If so, mark as a switch and break the loop:
+                // se for para trocar atribui o valor true á variável shouldSwitch:
                 shouldSwitch = true;
                 break;
               }
             } else if (dir == "desc") {
               if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                // If so, mark as a switch and break the loop:
+                // se for para trocar atribui o valor true á variável shouldSwitch:
                 shouldSwitch = true;
                 break;
               }
             }
           }
           if (shouldSwitch) {
-            /* If a switch has been marked, make the switch
-            and mark that a switch has been done: */
+            /*  
+            se for executada a troca a variavel switching passa  a true*/
             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
             switching = true;
-            // Each time a switch is done, increase this count by 1:
+            // cada vez que é feita uma troca esta variável é incrementada em 1:
             switchcount++;
           } else {
-            /* If no switching has been done AND the direction is "asc",
-            set the direction to "desc" and run the while loop again. */
+            /*  
+            se não for efetuada nenhuma troca e a direção for ascendente, é alterada a variável para descendente e o loop corre novamente*/
             if (switchcount == 0 && dir == "asc") {
               dir = "desc";
               switching = true;

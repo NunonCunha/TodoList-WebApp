@@ -2,12 +2,15 @@
     <head>
         <title>Editar Tarefa</title>
         <link rel="stylesheet" href="../static/styles/style.css" />
+        <!-- Carregamento de fontes da google -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
           href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
           rel="stylesheet"
         />
+        <!-- Carregamento de icons especiais
+        referência: https://fontawesome.com/icons -->
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -27,20 +30,23 @@
                     <div class="edit-task-box">
                         <input class="edit-input-box" type="text" 
                         id="todo" 
-                        name="todo" value='{{datas.task}}'
+                        name="todo" 
+                        value='{{datas.task}}'
                         required>
                     </div>
                     <div class="edit-task-box">
                         <input class="edit-input-box" class="task-box" type="text" 
                         id="todoDescription" 
-                        name="todoDescription" value='{{datas.task_descrition}}'
+                        name="todoDescription" 
+                        value='{{datas.task_descrition}}'
                         required>
                     </div>
                     <div class="edit-task-box">
                         <label for="startAt">Start:</label>
                         <input class="edit-input-box" type="date" 
                         id="startAt" 
-                        name="startAt" value='{{datas.created_at}}'
+                        name="startAt" 
+                        value='{{datas.created_at}}'
                         required>
                     </div>
                     <div class="edit-task-box">
