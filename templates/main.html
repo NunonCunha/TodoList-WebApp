@@ -14,71 +14,77 @@
     />
     <script type="text/javascript" src="javascript.js"></script>
 
+    <!-- Este script envia um alerta ao utilizador -->
     <script>
       function showAlert() {
         alert("Registo Efetuado com Sucesso");
       }
     </script>
   </head>
+  <!-- Antes de construir o body verifica se o servidor informou se é um novo utilizador, caso seja verdade executa o script -->
   <body {%if new_User%} onload="showAlert()" {% endif %}>
     <div class="container">
       <header>
         <h1 class="titles">ToDo List <i class="fa-solid fa-list-check"></i></h1>
       </header>
       <div>
+        <!-- Apresenta o nome do utilizador enviado pelo servidor caso não receba dados da variavel data -->
+        {%if not data%}
         <h2>Tarefas de {{user}}</h2>
-
+        <!-- Class para apresentar a data e hora atual -->
         <div class="date" id="current_date">
           <script>
             document.getElementById("current_date").innerHTML = Date();
           </script>
         </div>
-      </div>
-      <!-- <div class="errodel">
-        {%if adminDelete==False%}
-        <p>Não foi possivel remover o utilizador!</p>
         {% endif %}
       </div>
-      <div class="ok">
-        {%if adminDelete==True%}
-        <p>Utilizador removido</p>
-        {% endif %}
-      </div>
-      {%if data%} -->
-      <!-- <div>
-        <table>
+      <!-- Apresenta as funções do administrador, apresenta nome e a tabela da DB com os users com role bussiness caso receba dados da variavel data -->
+      <!-- Existe a possibilidade de eleminir utilizadores -->
+      {%if data%}
+      <h2>Pagina do Administrador</h2>
+      <h3>Olá {{user}}</h3>
+      <div>
+        <table id="tarefas" class="tabela-tarefas">
           <thead>
             <tr>
-              <th>Email</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Salt</th>
-              <th>Password(Sha256)</th>
-              <th>Role</th>
+              <th style="cursor: pointer" onclick="sortTable(0)">Email</th>
+              <th style="cursor: pointer" onclick="sortTable(1)">First Name</th>
+              <th style="cursor: pointer" onclick="sortTable(2)">Last Name</th>
+              <th style="cursor: pointer" onclick="sortTable(3)">Role</th>
             </tr>
           </thead>
           <tbody>
             {% for item in data %}
             <tr>
-              <td>{{ item.email }}</td>
-              <td>{{ item.first_name }}</td>
-              <td>{{ item.last_name }}</td>
-              <td>{{ item.salt }}</td>
-              <td>{{ item.password_hash }}</td>
-              <td>{{ item.role }}</td>
+              <td class="espacamento">{{ item.email }}</td>
+              <td class="espacamento">{{ item.first_name }}</td>
+              <td class="espacamento">{{ item.last_name }}</td>
+              <td class="espacamento">{{ item.role }}</td>
+              <td class="button-spacing-2" id="fixed-width">
+                <form
+                  method="GET"
+                  action='{{url_for("deleteUser",id=item.id)}}'
+                >
+                  <!-- Este script executa um alert de confirmação -->
+                  <button
+                    style="cursor: pointer"
+                    class="button2, button-delete"
+                    onclick='return confirm("Tem a certeza que deseja remover?")'
+                  >
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </form>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
-      <div class="delete">
-        <form id="login" action="/" method="post">
-          <input type="text" id="deluser" name="deluser" placeholder="Name" />
-          <input id="submit" type="submit" value="Delete" />
-        </form>
-      </div> 
-      {% endif %}-->
+      {% endif %}
       <div class="table-container">
+        <!-- Apresenta a tabela da DB do utilizador logado com todas as tasks caso receba dados da variavel todo do servidor -->
+        <!-- Existe a possibilidade de eliminar e editar tasks -->
         {%if todo%}
         <!-- TODO: alterar a tag e utilizar Css -->
         <!-- <center> -->
@@ -89,8 +95,6 @@
               <th style="cursor: pointer" onclick="sortTable(1)">Descrição</th>
               <th style="cursor: pointer" onclick="sortTable(2)">Início</th>
               <th style="cursor: pointer" onclick="sortTable(3)">Fim</th>
-              <!-- <th></th>
-                <th></th> -->
             </tr>
           </thead>
           <tbody>

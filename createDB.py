@@ -2,6 +2,7 @@ import sqlite3 as sql
 
 def create_DB():
 
+    #Cria o ficheiro da base dados e dá connect
     dBase = sql.connect('db_todoApp.db')
 
     #Cria o cursor para fazer queries SQL
@@ -33,7 +34,7 @@ def create_DB():
     #Ativação das FK
     cursor.execute('PRAGMA foreign_keys=ON')
 
-    #Comite da DB
+    #Commit da DB
     dBase.commit()
 
     #Fechar a ligação da DB
